@@ -16,8 +16,8 @@ diretorios = [
 ]
 
 for dir_name in diretorios:
-    tar_name = f"{dir_name}.tar.gz"
+    tar_name = f"{dir_name}.tar"
     dir_full_path = os.path.join(start_path, dir_name)
-    with tarfile.open(os.path.join(start_path, tar_name), "w:gz") as tar:
+    with tarfile.open(os.path.join(start_path, tar_name), "w") as tar:
         tar.add(dir_full_path, arcname=dir_name)
     print(f"Diretório '{dir_full_path}' comprimido em '{tar_name}'")
