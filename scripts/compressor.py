@@ -2,6 +2,12 @@ import os
 import sys
 import tarfile
 
+# Códigos ANSI para cores
+RED = '\033[91m'
+GREEN = '\033[92m'
+YELLOW = '\033[93m'
+RESET = '\033[0m'
+
 # Recebe o caminho de início como argumento ou usa o diretório atual
 start_path = sys.argv[1] if len(sys.argv) > 1 else '.'
 
@@ -20,4 +26,4 @@ for dir_name in diretorios:
     dir_full_path = os.path.join(start_path, dir_name)
     with tarfile.open(os.path.join(start_path, tar_name), "w") as tar:
         tar.add(dir_full_path, arcname=dir_name)
-    print(f"Diretório '{dir_full_path}' comprimido em '{tar_name}'")
+    print(f"{YELLOW}Diretório '{dir_full_path}' comprimido em '{tar_name}'")
