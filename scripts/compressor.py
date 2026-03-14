@@ -26,4 +26,4 @@ for dir_name in diretorios:
     dir_full_path = os.path.join(start_path, dir_name)
     with tarfile.open(os.path.join(start_path, tar_name), "w") as tar:
         tar.add(dir_full_path, arcname=dir_name)
-    print(f"{YELLOW}Diretório '{dir_full_path}' comprimido em '{tar_name}'")
+    print(f"{YELLOW}Diretório '{dir_full_path}' comprimido em '{tar_name}'{RESET}")
