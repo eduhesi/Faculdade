@@ -21,9 +21,22 @@ diretorios = [
     )
 ]
 
+erros = []
+
 for dir_name in diretorios:
     tar_name = f"{dir_name}.tar"
     dir_full_path = os.path.join(start_path, dir_name)
-    with tarfile.open(os.path.join(start_path, tar_name), "w") as tar:
-        tar.add(dir_full_path, arcname=dir_name)
-    print(f"{YELLOW}Diretório '{dir_full_path}' comprimido em '{tar_name}'{RESET}")
+    try:
+        with tarfile.open(os.path.join(start_path, tar_name), "w") as tar:
+            tar.add(dir_full_path, arcname=dir_name)
+        print(f"{YELLOW}Diretório '{dir_full_path}' comprimido em '{tar_name}'{RESET}")
+    except Exception as e:
+        print(f"{RED}Erro ao comprimir '{dir_full_path}': {e}{RESET}")
+        erros.append(dir_name)
+
+if erros:
+    print(f"{RED}Falha ao comprimir os diretórios:{RESET}")
+    for nome in erros:
+        print(f"{RED}- {nome}{RESET}")
+else:
+    print(f"{GREEN}Todos os diretórios foram comprimidos com sucesso!{RESET}")
