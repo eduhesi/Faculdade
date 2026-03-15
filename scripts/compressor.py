@@ -25,7 +25,11 @@ erros = []
 
 for dir_name in diretorios:
     tar_name = f"{dir_name}.tar"
+    tar_path = os.path.join(start_path, tar_name)
     dir_full_path = os.path.join(start_path, dir_name)
+    if os.path.exists(tar_path):
+        print(f"{YELLOW}Arquivo '{tar_name}' já existe. Pulando compressão do diretório '{dir_name}'.{RESET}")
+        continue
     try:
         with tarfile.open(os.path.join(start_path, tar_name), "w") as tar:
             tar.add(dir_full_path, arcname=dir_name)
