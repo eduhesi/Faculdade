@@ -7,7 +7,6 @@ RED = '\033[91m'
 GREEN = '\033[92m'
 YELLOW = '\033[93m'
 RESET = '\033[0m'
-BLUE = '\033[94m'
 
 min = 147
 max = 163
@@ -22,7 +21,7 @@ for chapter in range(min, max):
         f"r:{url}",
         "-d", download_dir
     ]
-    print(f"{BLUE}Baixando capítulo {chapter}...{RESET}")
+    print(f"{RESET}Baixando capítulo {chapter}...")
     subprocess.run(cmd, check=True)
 
     src = os.path.join(download_dir, "directlink")
@@ -35,7 +34,7 @@ for chapter in range(min, max):
                 file_path = os.path.join(dst, filename)
                 if os.path.isfile(file_path):
                     os.remove(file_path)
-                    print(f"{YELLOW}Removido: {file_path}{RESET}")
-        print(f"{GREEN}Pasta renomeada para {dst}{RESET}")
+                    print(f"{YELLOW}Removido: {file_path}")
+        print(f"{GREEN}Pasta renomeada para {dst}")
     else:
-        print(f"{RED}Pasta de origem {src} não encontrada para o capítulo {chapter}.{RESET}")
+        print(f"{RED}Pasta de origem {src} não encontrada para o capítulo {chapter}.")
