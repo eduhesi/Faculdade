@@ -36,6 +36,8 @@ esperado = total + len(faltando)
 #     url = base_url.format(c)
 #     cmd = [
 #         "gallery-dl",
+#         "--user-agent", "browser",
+#         "--cookies-from-browser", "firefox",
 #         "--retries", "0",
 #         url
 #     ]
