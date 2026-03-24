@@ -1,26 +1,42 @@
 import os
-import sys
 from datetime import datetime
+from typing import List, Tuple, Optional
 
-start_path = sys.argv[1] if len(sys.argv) > 1 else '.'
-pastas_com_arquivos_diferentes = []
+def pastas_com_arquivos(
+    start_path: str = '.',
+    excluidos: Optional[List[str]] = None,
+    tipos: Optional[Tuple[str, ...]] = None
+) -> List[str]:
+    """
+    Retorna lista de pastas (relativas a start_path) que contêm arquivos dos tipos especificados,
+    ignorando diretórios que contenham qualquer termo em 'excluidos'.
+    """
+    if excluidos is None:
+        excluidos = ['mangafire']
+    if tipos is None:
+        tipos = ('.tar', '.zip', '.cbz')
 
-for root, dirs, files in os.walk(start_path):
-    if 'mangafire' in os.path.relpath(root, start_path).split(os.sep):
-        continue
-    for file in files:
-        # if not
-        if file.endswith(('.tar', '.zip', '.cbz')):
-            rel = os.path.relpath(root, start_path)
-            pastas_com_arquivos_diferentes.append(rel)
-            break
+    pastas = set()
+    for root, _, files in os.walk(start_path):
+        rel_path_parts = os.path.relpath(root, start_path).split(os.sep)
+        if any(excluido in rel_path_parts for excluido in excluidos):
+            continue
+        for file in files:
+            if file.endswith(tipos):
+                rel = os.path.relpath(root, start_path)
+                pastas.add(rel)
+                break
+    return sorted(pastas)
 
-# Gera nome do arquivo com data e hora
-now = datetime.now().strftime('%Y%m%d_%H%M%S')
-# log_dir = os.path.join(start_path, 'log')
-# os.makedirs(log_dir, exist_ok=True)
-# log_filename = os.path.join(log_dir, f'log_{now}.txt')
-log_filename = f'log_{now}.txt'
-with open(log_filename, 'w', encoding='utf-8') as f:
-    for a in pastas_com_arquivos_diferentes:
-        f.write(a + '\n')
+if __name__ == "__main__":
+    import sys
+    start_path = sys.argv[1] if len(sys.argv) > 1 else '.'
+    # Exemplos de uso:
+    # pastas = pastas_com_arquivos(start_path, excluidos=['mangafire', 'outro_dir'], tipos=('.zip',))
+    pastas = pastas_com_arquivos(start_path)
+    now = datetime.now().strftime('%Y%m%d_%H%M%S')
+    log_filename = f'log_{now}.txt'
+    with open(log_filename, 'w', encoding='utf-8') as f:
+        for pasta in pastas:
+            f.write(pasta + '\n')
+    print(f"Log gerado em: {log_filename}")

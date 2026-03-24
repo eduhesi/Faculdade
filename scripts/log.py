@@ -1,17 +1,21 @@
 import os
-import sys
 from datetime import datetime
+from printer import printer as p, PrinterType
 
-# start_path = sys.argv[1] if len(sys.argv) > 1 else '.'
+def logger(start_path: str = '.', ignore: list = None) -> str:
+    """
+    Gera um log com os caminhos relativos de todos os arquivos em start_path,
+    ignorando diretórios especificados em ignore.
+    Retorna o caminho do arquivo de log criado.
+    """
+    if ignore is None:
+        ignore = ['.yacreaderlibrary', 'log']
 
-def logger(start_path = '.'):
-    # Lista para armazenar caminhos relativos dos arquivos
     arquivos_relativos = []
 
-    for root, dirs, files in os.walk(start_path):
-        # Ignora diretórios '.yacreaderlibrary' e 'log'
+    for root, _, files in os.walk(start_path):
         rel_parts = os.path.relpath(root, start_path).split(os.sep)
-        if '.yacreaderlibrary' in rel_parts or 'log' in rel_parts:
+        if any(ign in rel_parts for ign in ignore):
             continue
         for file in files:
             rel_path = os.path.relpath(os.path.join(root, file), start_path)
@@ -30,4 +34,5 @@ def logger(start_path = '.'):
         for caminho in arquivos_relativos:
             f.write(caminho + '\n')
 
-    print(f"Log criado em: {log_filename}")
+    p(f"Log criado em: {log_filename}", PrinterType.SUCCESS)
+    return log_filename
