@@ -12,9 +12,9 @@ def pastas_com_arquivos(
     ignorando diretórios que contenham qualquer termo em 'excluidos'.
     """
     if excluidos is None:
-        excluidos = ['mangafire']
+        excluidos = ['.yacreaderlibrary']
     if tipos is None:
-        tipos = ('.tar', '.zip', '.cbz')
+        tipos = ('.tar', '.zip', '.cbz', '.pdf')
 
     pastas = set()
     for root, _, files in os.walk(start_path):
@@ -22,10 +22,13 @@ def pastas_com_arquivos(
         if any(excluido in rel_path_parts for excluido in excluidos):
             continue
         for file in files:
-            if file.endswith(tipos):
-                rel = os.path.relpath(root, start_path)
-                pastas.add(rel)
-                break
+           _, file_extension = os.path.splitext(file)
+           if not file_extension:  # Ignora arquivos sem extensão
+               continue
+           if not file_extension in tipos:
+               rel = os.path.relpath(root, start_path)
+               pastas.add(rel)
+               break
     return sorted(pastas)
 
 if __name__ == "__main__":
