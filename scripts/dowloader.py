@@ -2,6 +2,7 @@ import subprocess
 import os
 import shutil
 from printer import printer as p, PrinterType
+from concurrent.futures import ThreadPoolExecutor
 
 def downloader(url: str, items, retries: str):
     for i in items:
@@ -48,3 +49,32 @@ def specific_downloader():
             p(f"Pasta renomeada para {dst}", PrinterType.SUCCESS)
         else:
             p(f"Pasta de origem {src} não encontrada para o capítulo {chapter}.", PrinterType.ERROR)
+
+def baixar_volume(url_template: str, i: int, retries: str = "3"):
+    url = url_template.format(i)
+    cmd = [
+        "gallery-dl",
+        "--user-agent", "browser",
+        "--cookies-from-browser", "firefox",
+        # "--retries", retries,
+        url
+    ]
+    print(f"Baixando {f'v{i:03d}'}...")
+    subprocess.run(cmd, check=True)
+
+def downloader_thread(url_template: str, items, retries: str = "3", max_workers: int = 4):
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = [
+            executor.submit(baixar_volume, url_template, i, retries)
+            for i in items
+        ]
+        # Aguarda todos terminarem (opcional, para capturar exceções)
+        for future in futures:
+            future.result()
+
+if __name__ == '__main__':
+    downloader_thread(
+        "https://mangafire.to/read/the-disastrous-life-of-saiki-kk.kjp9/en/volume-{}", 
+        [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],
+        max_workers=4
+    )

@@ -24,3 +24,28 @@ def renomear_pastas(diretorio, pattern: str = None):
                     p(f'Pasta {novo_nome} já existe. Pulando...', PrinterType.ALERT)
             else:
                 p(f'Padrão não encontrado em: {nome_pasta}', PrinterType.ERROR)
+
+def renomear_arquivos_czb(diretorio, pattern: str = None):
+    """
+    Renomeia arquivos .czb em 'diretorio' usando o padrão regex informado.
+    :param diretorio: Caminho do diretório a ser processado.
+    :param pattern: Regex para extração do novo nome do arquivo.
+    """
+    if pattern is None:
+        pattern = r'Vol\.(\d+)\s+Ch\.(\d+(?:\.\d+)?)'
+    for nome_arquivo in os.listdir(diretorio):
+        if nome_arquivo.lower().endswith('.cbz'):
+            caminho_antigo = os.path.join(diretorio, nome_arquivo)
+            match = re.search(pattern, nome_arquivo, re.IGNORECASE)
+            if match:
+                vol = int(match.group(1))
+                cap = int(float(match.group(2)))
+                novo_nome = f'v{vol:02d}_c{cap:03d}.cbz'
+                caminho_novo = os.path.join(diretorio, novo_nome)
+                if not os.path.exists(caminho_novo):
+                    os.rename(caminho_antigo, caminho_novo)
+                    p(f'Renomeado: {nome_arquivo} -> {novo_nome}', PrinterType.SUCCESS)
+                else:
+                    p(f'Arquivo {novo_nome} já existe. Pulando...', PrinterType.ALERT)
+            else:
+                p(f'Padrão não encontrado em: {nome_arquivo}', PrinterType.ERROR)
