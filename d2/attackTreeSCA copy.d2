@@ -1,0 +1,94 @@
+direction: down
+
+# Estilização Global
+vars: {
+  d2-config: {
+    layout-engine: dagre
+  }
+}
+
+# Definição dos blocos principais
+Ataque de supply-chain: {
+  style: {
+    fill: "#2e5a1c"
+    stroke: "#ffffff"
+    font-color: "#ffffff"
+  }
+}
+
+# Nível 1
+Criar e divulgar pacote malicioso próprio: {
+  style: { fill: "#1e4d8c"; font-color: "#ffffff" }
+}
+
+Criar confusão com nome de pacote legítimo: {
+  style: { fill: "#1e4d8c"; font-color: "#ffffff" }
+}
+
+Comprometer pacote legítimo: {
+  style: { fill: "#1e4d8c"; font-color: "#ffffff" }
+}
+
+# Nível 2 - Confusão de Nomes
+Combosquatting: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Typosquatting: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Alucinação de pacote por IA: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Uso indevido de marca: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Omissão ou troca de namespace: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Manipulação de separador de palavras: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+
+# Nível 2 - Comprometer Pacote Legítimo (Categorias Laranja)
+Injetar no código-fonte do pacote legítimo: { style: { fill: "#9c5a1a"; font-color: "#ffffff" } }
+Injetar durante o build do pacote legítimo: { style: { fill: "#9c5a1a"; font-color: "#ffffff" } }
+Distribuir versão maliciosa de pacote legítimo: { style: { fill: "#9c5a1a"; font-color: "#ffffff" } }
+
+# Sub-itens Código-Fonte
+Introduzir código malicioso por merge request enganoso: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Contribuir como mantenedor: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Explorar falha de renderização: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Adulterar o sistema de controle de versão: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+
+# Sub-itens Build
+Executar build malicioso: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Adulterar sistema de build exposto: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Adulterar tarefa de build como mantenedor: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+
+# Sub-itens Distribuição
+Referência pendente: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Abusar do mecanismo de resolução de dependências: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Distribuir como mantenedor do pacote: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Mascarar pacote legítimo: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Impedir atualização para versão não vulnerável: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+Injetar no sistema de hospedagem: { style: { fill: "#7a2a2a"; font-color: "#ffffff" } }
+
+# Conexões
+Ataque de supply-chain -> Criar e divulgar pacote malicioso próprio
+Ataque de supply-chain -> Criar confusão com nome de pacote legítimo
+Ataque de supply-chain -> Comprometer pacote legítimo
+
+Criar confusão com nome de pacote legítimo -> Combosquatting
+Criar confusão com nome de pacote legítimo -> Typosquatting
+Criar confusão com nome de pacote legítimo -> Alucinação de pacote por IA
+Criar confusão com nome de pacote legítimo -> Uso indevido de marca
+Criar confusão com nome de pacote legítimo -> Omissão ou troca de namespace
+Criar confusão com nome de pacote legítimo -> Manipulação de separador de palavras
+
+Comprometer pacote legítimo -> Injetar no código-fonte do pacote legítimo
+Comprometer pacote legítimo -> Injetar durante o build do pacote legítimo
+Comprometer pacote legítimo -> Distribuir versão maliciosa de pacote legítimo
+
+Injetar no código-fonte do pacote legítimo -> Introduzir código malicioso por merge request enganoso
+Injetar no código-fonte do pacote legítimo -> Contribuir como mantenedor
+Injetar no código-fonte do pacote legítimo -> Explorar falha de renderização
+Injetar no código-fonte do pacote legítimo -> Adulterar o sistema de controle de versão
+
+Injetar durante o build do pacote legítimo -> Executar build malicioso
+Injetar durante o build do pacote legítimo -> Adulterar sistema de build exposto
+Injetar durante o build do pacote legítimo -> Adulterar tarefa de build como mantenedor
+
+Distribuir versão maliciosa de pacote legítimo -> Referência pendente
+Distribuir versão maliciosa de pacote legítimo -> Abusar do mecanismo de resolução de dependências
+Distribuir versão maliciosa de pacote legítimo -> Distribuir como mantenedor do pacote
+Distribuir versão maliciosa de pacote legítimo -> Mascarar pacote legítimo
+Distribuir versão maliciosa de pacote legítimo -> Impedir atualização para versão não vulnerável
+Distribuir versão maliciosa de pacote legítimo -> Injetar no sistema de hospedagem
